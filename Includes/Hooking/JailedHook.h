@@ -65,9 +65,9 @@ extern "C"
         }                                                                                                    \
     }
 
+    // BinaryName 宣告放在 extern "C" 內部，給宏展開用（C linkage）
+    extern char *BinaryName;
+
 #ifdef __cplusplus
 }
 #endif
-
-// BinaryName 宣告移到這裡（C++ linkage，配合 Mods.mm 定義）
-extern char *BinaryName;
