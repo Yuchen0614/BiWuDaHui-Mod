@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
-extern bool isCustomAttackEnabled;
-extern int customAttackValue;
+#include "Mods.h"
 #import <AdSupport/AdSupport.h>
 #import <UIKit/UIKit.h>
 #include <map>
@@ -262,9 +261,10 @@ void LoadMenu() {
   {
     ImGui::BeginChild("##MainContent", mainContentSize, true);
     {
-      // 這是你的自訂攻擊力開關
       newChildVisible = childVisibilityMap["自訂攻擊力"];
-      ToggleWidget(ICON_FA_BOLT, "自訂攻擊力", &isCustomAttackEnabled, &newChildVisible);
+      if (ToggleWidget(ICON_FA_BOLT, "自訂攻擊力", &mods.isCustomAttackEnabled, &newChildVisible)) {
+          Console::logSuccess("Custom Attack Toggled");
+      }
       childVisibilityMap["自訂攻擊力"] = newChildVisible;
     }
     ImGui::EndChild();
@@ -363,8 +363,7 @@ void LoadMenu() {
           ImGui::PopTextWrapPos();
           ImGui::Spacing();
 
-          // 呼叫作者的精緻 UI 數字輸入框，限制最小值為 1，最大值為 999999
-          IntInputMini("數值設定", &customAttackValue, 1, 999999);
+          IntInputMini("數值設定", &mods.customAttackValue, 1, 999999);
         }
         else if (widgetName == "Menu Logs") {
           ImGui::Text(ICON_FA_INFO_CIRCLE);
