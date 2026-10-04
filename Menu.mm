@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
-#include "Mods.h"
 #import <AdSupport/AdSupport.h>
 #import <UIKit/UIKit.h>
 #include <map>
 #include <string>
 #include "Menu.h"
+#include "Mods.h"
 #define timer(sec) dispatch_after(dispatch_time(DISPATCH_TIME_NOW, sec * NSEC_PER_SEC), dispatch_get_main_queue(), ^
 
 bool showLogs = false;
