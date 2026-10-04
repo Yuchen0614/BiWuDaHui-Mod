@@ -1,4 +1,6 @@
 #import <Foundation/Foundation.h>
+extern bool isCustomAttackEnabled;
+extern int customAttackValue;
 #import <AdSupport/AdSupport.h>
 #import <UIKit/UIKit.h>
 #include <map>
@@ -260,17 +262,10 @@ void LoadMenu() {
   {
     ImGui::BeginChild("##MainContent", mainContentSize, true);
     {
-      newChildVisible = childVisibilityMap["Toggle 1"];
-      ToggleWidget(ICON_FA_BOLT, "Toggle 1", & mods.bool1, & newChildVisible);
-      childVisibilityMap["Toggle 1"] = newChildVisible;
-
-      newChildVisible = childVisibilityMap["Toggle 2"];
-      ToggleWidget(ICON_FA_CHILD, "Toggle 2", & mods.bool2, & newChildVisible);
-      childVisibilityMap["Toggle 2"] = newChildVisible;
-
-      newChildVisible = childVisibilityMap["Toggle 3"];
-      ToggleWidget(ICON_FA_CHILD, "Toggle 3", & mods.bool3, & newChildVisible);
-      childVisibilityMap["Toggle 3"] = newChildVisible;
+      // 這是你的自訂攻擊力開關
+      newChildVisible = childVisibilityMap["自訂攻擊力"];
+      ToggleWidget(ICON_FA_BOLT, "自訂攻擊力", &isCustomAttackEnabled, &newChildVisible);
+      childVisibilityMap["自訂攻擊力"] = newChildVisible;
     }
     ImGui::EndChild();
   }
@@ -360,24 +355,16 @@ void LoadMenu() {
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 5);
         ImGui::SetWindowFontScale(0.8f);
 
-        if (widgetName == "Toggle 1") {
+        if (widgetName == "自訂攻擊力") {
           ImGui::Text(ICON_FA_INFO_CIRCLE);
           ImGui::SameLine();
           ImGui::PushTextWrapPos(ImGui::GetContentRegionAvail().x + 5);
-          ImGui::Text("Toggle 1 description.");
+          ImGui::Text("自訂你的角色攻擊力，預設為 9999");
           ImGui::PopTextWrapPos();
           ImGui::Spacing();
 
-          bool toggleValue = false;
-          ToggleButtonMini("Toggle A", & toggleValue);
-          ToggleButtonMini("Toggle B", & toggleValue);
-          ToggleButtonMini("Toggle C", & toggleValue);
-          ImGui::Spacing();
-
-          SliderFloatMini("SliderFloat", &mods.floatVal, 0.0f, 500.0f);
-          SliderIntMini("SliderInt", &mods.intval, 0, 500);
-          IntInputMini("IntInput", &mods.intval2, 0, 100);
-          TextInputMini("TextInput", mods.myText, false);
+          // 呼叫作者的精緻 UI 數字輸入框，限制最小值為 1，最大值為 999999
+          IntInputMini("數值設定", &customAttackValue, 1, 999999);
         }
         else if (widgetName == "Menu Logs") {
           ImGui::Text(ICON_FA_INFO_CIRCLE);
