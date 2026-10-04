@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest   # 原本 macos-13
+    runs-on: macos-latest
     env:
       THEOS: ${{ github.workspace }}/theos
 
@@ -21,6 +21,10 @@ jobs:
         run: |
           rm -rf "${THEOS}/sdks"
           git clone https://github.com/theos/sdks.git "${THEOS}/sdks"
+
+      - name: Install ldid
+        run: |
+          brew install ldid
 
       - name: Compile Dylib
         run: |
