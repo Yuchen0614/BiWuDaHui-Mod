@@ -30,7 +30,7 @@ extern "C"
     void *find_module_by_path(char *machoPath);
     BOOL DeactiveCodePatch(char *machoPath, uint64_t vaddr, char *patch);
     BOOL ActiveCodePatch(char *machoPath, uint64_t vaddr, char *patch);
-    extern char *BinaryName;
+    // extern char *BinaryName;  ← 移除這行
 
 #define UIColorFromHex(hexColor) [UIColor colorWithRed:((float)((hexColor & 0xFF0000) >> 16)) / 255.0 green:((float)((hexColor & 0xFF00) >> 8)) / 255.0 blue:((float)(hexColor & 0xFF)) / 255.0 alpha:1.0]
 
@@ -38,9 +38,9 @@ extern "C"
     NSString *result_##y = StaticInlineHookPatch(BinaryName, x, nullptr);  \
     if (result_##y)                                                        \
     {                                                                      \
-        log(@"Hook result: %s", result_##y.UTF8String);                    \
+        log(@\"Hook result: %s\", result_##y.UTF8String);                    \
         void *result = StaticInlineHookFunction(BinaryName, x, (void *)y); \
-        log(@"Hook result %p", result);                                    \
+        log(@\"Hook result %p\", result);                                    \
         *(void **)(&z) = (void *)result;                                   \
     }
 
@@ -48,24 +48,27 @@ extern "C"
     NSString *result_##z = StaticInlineHookPatch(BinaryName, x, nullptr); \
     if (result_##z)                                                       \
     {                                                                     \
-        log(@"Hook result: %s", result_##z.UTF8String);                   \
+        log(@\"Hook result: %s\", result_##z.UTF8String);                   \
         void *result = StaticInlineHookFunction(BinaryName, x, nullptr);  \
-        log(@"Retrieved function pointer %p", result);                    \
+        log(@\"Retrieved function pointer %p\", result);                    \
         *(void **)(&z) = (void *)result;                                  \
     }
 
 #define PATCHOFFSET(x, z, active)                                                                            \
     {                                                                                                        \
-        log(@"Attempting patch #%llx", x);                                                                   \
+        log(@\"Attempting patch #%llx\", x);                                                                   \
         NSString *result_patch_##x = StaticInlineHookPatch(BinaryName, x, z);                                \
         if (result_patch_##x)                                                                                \
         {                                                                                                    \
-            log(@"Hook result for %llx: %s", x, [result_patch_##x UTF8String]);                              \
+            log(@\"Hook result for %llx: %s\", x, [result_patch_##x UTF8String]);                              \
             BOOL success = active ? ActiveCodePatch(BinaryName, x, z) : DeactiveCodePatch(BinaryName, x, z); \
-            log(@"Patch %s result for %llx: %d", active ? "activation" : "deactivation", x, success);        \
+            log(@\"Patch %s result for %llx: %d\", active ? \"activation\" : \"deactivation\", x, success);        \
         }                                                                                                    \
     }
 
 #ifdef __cplusplus
 }
 #endif
+
+// BinaryName 宣告移到這裡（C++ linkage，配合 Mods.mm 定義）
+extern char *BinaryName;
