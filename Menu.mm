@@ -262,7 +262,7 @@ void LoadMenu() {
     ImGui::BeginChild("##MainContent", mainContentSize, true);
     {
       newChildVisible = childVisibilityMap["自訂攻擊力"];
-      if (ToggleWidget(ICON_FA_BOLT, "自訂攻擊力", &mods.isCustomAttackEnabled, &newChildVisible)) {
+      if (ToggleWidget(ICON_FA_SWORD, "自訂攻擊力", &mods.isCustomAttackEnabled, &newChildVisible)) {
           Console::logSuccess("Custom Attack Toggled");
       }
       childVisibilityMap["自訂攻擊力"] = newChildVisible;
@@ -363,7 +363,7 @@ void LoadMenu() {
           ImGui::PopTextWrapPos();
           ImGui::Spacing();
 
-          IntInputMini("數值設定", &mods.customAttackValue, 1, 999999);
+         IntInputMini("數值設定", &mods.customAttackValue, 1, 999999);
         }
         else if (widgetName == "Menu Logs") {
           ImGui::Text(ICON_FA_INFO_CIRCLE);
