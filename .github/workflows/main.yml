@@ -1,13 +1,15 @@
 name: Build Mod Menu
 
 on:
-  workflow_dispatch: # 允許你手動按按鈕觸發編譯
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-13   # 把這行從 macos-latest 改成 macos-13
     env:
       THEOS: ${{ github.workspace }}/theos
+
+# ...下方的 steps 保持原樣不用動...
 
     steps:
       - name: Checkout Code
