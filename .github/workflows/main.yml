@@ -1,0 +1,38 @@
+name: Build Mod Menu
+
+on:
+  workflow_dispatch: # 允許你手動按按鈕觸發編譯
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      THEOS: ${{ github.workspace }}/theos
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Theos
+        uses: actions/checkout@v4
+        with:
+          repository: theos/theos
+          path: theos
+          submodules: recursive
+
+      - name: Setup iOS SDKs
+        run: |
+          git clone https://github.com/theos/sdks.git $THEOS/sdks
+
+      - name: Compile Dylib
+        run: |
+          make clean
+          make FINALPACKAGE=1
+
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ModMenu-Dylib
+          path: |
+            .theos/obj/**/*.dylib
+            **/*.dylib
