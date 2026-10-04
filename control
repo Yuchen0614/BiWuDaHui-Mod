@@ -1,8 +1,8 @@
-Package: com.flaco510.iosimgui
-Name: Flaco
+Package: com.yuchen0614.biwudahui
+Name: BiWuDaHui Mod Menu
 Depends: mobilesubstrate
-Version: 2.0.0
+Version: 1.0.0
 Architecture: iphoneos-arm
-Description: Simple ImGui Menu
-Maintainer: Flaco
-Author: Flaco
+Description: Custom ImGui Mod Menu for Unity games with dynamic function hooking
+Maintainer: Yuchen0614 <your@email.com>
+Author: Yuchen0614
